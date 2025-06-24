@@ -1,22 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> res;
-        ///stack can also be used
-        
+        vector<int>pre;
+       if(root == NULL ) 
+       return pre;
+       
+       stack<TreeNode*>st;
+       st.push(root);
 
-        preorder(root, res);
-        return res;        
+       while(!st.empty())
+       {
+        root=st.top();
+        st.pop();
+        pre.push_back(root->val);
+        if(root->right != NULL ) {st.push(root->right);}
+        if(root->left != NULL ) {st.push(root->left);}
+       }
+     return pre;
     }
-
-private:
-    void preorder(TreeNode* node, std::vector<int>& res) {
-        if (node == nullptr) {
-            return;
-        }
-
-        res.push_back(node->val);
-        preorder(node->left, res);
-        preorder(node->right, res);
-    }    
 };
