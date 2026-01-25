@@ -1,22 +1,28 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        map<int,int>mp;
-        for( int i : nums)
-        {
-            mp[i]++;
+       int m = 1;
+       int s = nums[0];
+ cout<<s<<endl;
+       for(int i =1 ; i<nums.size();i++)
+       {
+        if(nums[i]==s) {
+            
+            m++;
         }
-        int f =0 ;
-        int ans = 0;
-        for( auto i : mp )
-        {
-                if( i .second > f)
-                {
-                    f=i.second;
-                    ans=i.first;
-                }
-        }
+//boyer moore 
+        else{
+            m--;
+            if(m==0)
+            {
+                m=1;
+                s=nums[i];
+            }
+            }
 
-        return ans ;
+            cout<<s<<endl;
+       }
+
+       return s;
     }
 };
