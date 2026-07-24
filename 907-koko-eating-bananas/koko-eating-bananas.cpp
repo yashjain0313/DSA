@@ -1,16 +1,15 @@
 class Solution {
 public:
- bool check(vector<int>& s, int speed, int k)
+bool check (vector<int>& s,int mid,int k)
+{
+    int ans =0;
+    for(int i : s)
     {
-        long long hours = 0;
-        for (int pile : s)
-        {
-            hours += (pile + speed - 1) / speed;
-            if (hours > k)
-                return false;
-        }
-        return true;
+        ans+=ceil((double)i/mid);
+        if(ans>k) return false;
     }
+    return true;
+}
     int minEatingSpeed(vector<int>& s, int k) {
     int l=1;
     int h = *max_element(s.begin(),s.end());
