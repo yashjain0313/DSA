@@ -8,11 +8,11 @@ for(char c : s)
 
 string left = "", mid = "";
 
-for(auto it = freq.begin(); it != freq.end(); ++it) {
-    left += string(it->second / 2, it->first);
+for(auto it : freq) {
+    left += string(it.second / 2, it.first);
 
-    if(it->second % 2 == 1 && mid.empty())
-        mid = it->first;
+    if(it.second % 2 == 1 && mid.empty())
+        mid = it.first;
 }
 
 string right = left;
