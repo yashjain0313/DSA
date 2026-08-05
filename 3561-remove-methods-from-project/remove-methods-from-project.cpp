@@ -1,44 +1,59 @@
 class Solution {
 public:
-    void dfs(int node, unordered_map<int, vector<int>>& invoke, vector<int>& vis) {
-        vis[node] = 1;
-        for (auto &it : invoke[node]) {
-            if (!vis[it]) {
-                dfs(it, invoke, vis);
-            }
-        }
-    }
-
     vector<int> remainingMethods(int n, int k, vector<vector<int>>& invocations) {
-        unordered_map<int, vector<int>> invoke;
-
-        for (auto &it : invocations) {
-            int u = it[0];
-            int v = it[1];
-            invoke[u].push_back(v);
+        vector<vector<int>>adj(n);
+        vector<int>in(n,0);
+        vector<int>sus(n,false);
+        for(auto i : invocations)
+        {
+            int a = i[0];
+            int b = i[1];
+            in[b]++;
+            adj[a].push_back(b);
         }
 
-        vector<int> vis(n, 0);
-        dfs(k, invoke, vis);
+        queue<int>q;
+        q.push(k);
+        sus[k]=1;
 
-        vector<int> rem;
-
-        for (auto &it : invocations) {
-            int u = it[0];
-            int v = it[1];
-
-            if (!vis[u] && vis[v]) {
-                for (int i = 0; i < n; i++)
-                    rem.push_back(i);
-                return rem;
+        while(!q.empty())
+        {
+            int c=q.front();
+            q.pop();
+            for(int i : adj[c]){
+                in[i]--;
+                if(sus[i]!=true)
+                {
+                sus[i]=true;
+                q.push(i);
+                }
             }
         }
 
-        for (int i = 0; i < n; i++) {
-            if (!vis[i])
-                rem.push_back(i);
-        }
+        bool make = false;
 
-        return rem;
+        vector<int>ans;
+        for(int i =0;i<n;i++)
+        {
+            if(sus[i]&& in[i]>0){
+                make=true;
+                break;
+            }
+            if(sus[i] == false)
+            {
+                ans.push_back(i);
+            }
+        }
+        if(make)
+        {   vector<int>dc;
+            for(int i =0;i<n;i++)
+            {
+                dc.push_back(i);
+            }
+        return dc;
+        }
+        
+return ans ;
+
     }
 };
