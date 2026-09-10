@@ -2,22 +2,32 @@ class Solution {
 public:
     int ans = 0;
 
-    pair<int, int> dfs(TreeNode* root) {
-        if (root == nullptr)
-            return {0, 0};
+    int dfs(TreeNode* root, int& sum, int& count) {
+        if (root == nullptr) {
+            sum = 0;
+            count = 0;
+            return 0;
+        }
 
-        auto left = dfs(root->left);
-        auto right = dfs(root->right);
+        int leftSum = 0, leftCount = 0;
+        int rightSum = 0, rightCount = 0;
 
-        int sum = left.first + right.first + root->val;
-        int count = left.second + right.second + 1;
-        if (sum / count == root->val)
+        dfs(root->left, leftSum, leftCount);
+        dfs(root->right, rightSum, rightCount);
+
+        sum = leftSum + rightSum + root->val;
+        count = leftCount + rightCount + 1;
+
+        if (sum / count == root->val) {
             ans++;
-        return {sum, count};
+        }
+
+        return 0;
     }
 
     int averageOfSubtree(TreeNode* root) {
-        dfs(root);
+        int sum = 0, count = 0;
+        dfs(root, sum, count);
         return ans;
     }
 };
