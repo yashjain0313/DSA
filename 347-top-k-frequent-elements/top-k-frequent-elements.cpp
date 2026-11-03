@@ -1,23 +1,21 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        vector<int>ans;
-        unordered_map<int,int>mpp;
-        for(int i=0;i<nums.size();i++){
-              mpp[nums[i]]++;
+        map<int,int>mp;
+        for(auto i : nums){
+            mp[i]++;
         }
-        //use priority queue so that the element having the max freq is on top 
-       priority_queue<pair<int,int>> pq;
-
-       for(auto &i : mpp)
-       {
-        pq.push({i.second,i.first});
-       }
-        
-          while(k--){
-            ans.push_back(pq.top().second);
+        priority_queue<pair<int,int>>pq;
+        for(auto i : mp){
+            pq.push({i.second,i.first});
+        }
+        vector<int>ans;
+        while(k--)
+        {   pair<int,int>p=pq.top();
+            ans.push_back(p.second);
             pq.pop();
-          }
-      return ans;  
+        }
+
+        return ans;
     }
 };
