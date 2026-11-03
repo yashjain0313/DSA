@@ -1,42 +1,26 @@
 class Solution {
 public:
-    vector<int> productExceptSelf(vector<int>& n) {
-        int ans=1;
-
-int ctr=0;
-int idx =0;
-
-        
-        for(int i =0;i<n.size();i++) 
-        {
-            if(n[i]!=0){ ans*=n[i];}
-            else{
-ctr++;
-idx=i;
-
-            }
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n =nums.size();
+        vector<int>pre(n);
+        vector<int>pos(n);
+        pre[0]=nums[0];
+        pos[n-1]=nums[n-1];
+        for(int i =1;i<nums.size();i++)
+        {   pre[i]=pre[i-1]*nums[i];
+        }
+        for(int i =n-2;i>=0;i--)
+        {   pos[i]=pos[i+1]*nums[i];
         }
 
- vector<int> v1(n.size(), 0);
-           
-        if(ctr>1)
-        {
-            return v1;
 
+        for(auto i : pos) cout<<i<<" ";
+        vector<int>ans(n);
+        ans[0]=pos[1];
+        ans[n-1]=pre[n-2];
+        for(int i =1;i<n-1;i++)
+        {   ans[i]=pre[i-1]*pos[i+1];
         }
-        else if (ctr==1)
-        {
-            v1[idx]=ans;
-            return v1;
-
-        }
-
- vector<int> v2(n.size(), ans);
-         for(int i =0;i<n.size();i++) 
-        {
-           v2[i]/=n[i];
-        }
-
-return v2;
+        return ans;
     }
 };
